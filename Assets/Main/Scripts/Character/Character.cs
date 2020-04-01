@@ -4,7 +4,8 @@ namespace Gamaga.CharacterSystem
 {
     public class Character : Actor
     {
-        
+        [SerializeField] private LayerMask groundLayerMask;
+        [SerializeField] private bool airControll = false;
 
         private bool isJumping = false;
         private bool isMovingRight = true;
@@ -20,15 +21,20 @@ namespace Gamaga.CharacterSystem
 
         public void HandleInput(Vector2 m)
         {
-            if (m.magnitude < 0.01f)
+            if (m.magnitude < 0.01f && CanMove())
             {
                 Stop();
             }
-            else
+            else if( CanMove() )
             {
                 Move(m);
                 SetFacingDirection();
             }
+        }
+
+        private bool CanMove()
+        {
+            return isGrounded || airControll;
         }
 
         private void Move(Vector2 m)
@@ -59,8 +65,20 @@ namespace Gamaga.CharacterSystem
 
         private void UpdateGroundedState()
         {
-            Physics2D.OverlapBox( groundedCollider.transform.position , groundedCollider.size , groundedCollider.transform.eulerAngles.z , 1 & gameObject.layer );
+            isGrounded = IsTouchingTheGround();            
         }
+
+        private bool IsTouchingTheGround()
+        {
+            Collider2D hitCollider = GroundColliderOverlap();
+            return hitCollider != null;
+        }
+
+        private Collider2D GroundColliderOverlap()
+        {
+            return Physics2D.OverlapBox(groundedCollider.transform.position, groundedCollider.size, groundedCollider.transform.eulerAngles.z, groundLayerMask.value);
+        }
+
 
     }
 
