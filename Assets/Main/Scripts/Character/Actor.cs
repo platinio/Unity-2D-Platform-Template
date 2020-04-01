@@ -4,9 +4,9 @@ namespace Gamaga
 {
     public class Actor : MonoBehaviour
     {
-        private Rigidbody2D rb = null;
-        private SpriteRenderer render = null;
-        private Animator animator = null;
+        protected Rigidbody2D rb = null;
+        protected SpriteRenderer render = null;
+        protected Animator animator = null;
 
         private void Awake()
         {
