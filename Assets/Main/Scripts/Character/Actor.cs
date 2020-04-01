@@ -4,6 +4,8 @@ namespace Gamaga
 {
     public class Actor : MonoBehaviour
     {
+        [SerializeField] protected BoxCollider2D groundedCollider = null;
+
         protected Rigidbody2D rb = null;
         protected SpriteRenderer render = null;
         protected Animator animator = null;
@@ -18,7 +20,12 @@ namespace Gamaga
             rb = GetComponent<Rigidbody2D>();
             render = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
-        }        
+        }
+
+        private void Initialize()
+        {
+            groundedCollider.enabled = false;
+        }
 
     }
 }

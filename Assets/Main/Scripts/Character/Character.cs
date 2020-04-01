@@ -4,23 +4,47 @@ namespace Gamaga.CharacterSystem
 {
     public class Character : Actor
     {
+        
+
         private bool isJumping = false;
-        private bool movingLeft = false;
-        private bool movingRight = false;
+        private bool isMovingRight = true;
+        private bool isGrounded = false;
+
+        private Vector2 velocitySmooth = Vector2.zero;
 
         private void Update()
         {
             UpdateAnimator();
+            UpdateGroundedState();
         }
 
-        public void MoveLeft(float m)
+        public void HandleInput(Vector2 m)
         {
-            rb.MovePosition(rb.position + ( Vector2.left * m * Time.deltaTime ));
+            if (m.magnitude < 0.01f)
+            {
+                Stop();
+            }
+            else
+            {
+                Move(m);
+                SetFacingDirection();
+            }
         }
 
-        public void MoveRight(float m)
+        private void Move(Vector2 m)
+        {            
+            m.y = rb.velocity.y;
+            rb.velocity = m;
+        }
+
+        private void SetFacingDirection()
         {
-            rb.MovePosition(rb.position + (Vector2.right * m * Time.deltaTime));
+            isMovingRight = rb.velocity.x > 0.0f;
+        }
+
+        private void Stop()
+        {
+            rb.velocity = new Vector2( 0.0f , rb.velocity.y );
         }
 
         public void Jump(float force)
@@ -31,6 +55,11 @@ namespace Gamaga.CharacterSystem
         private void UpdateAnimator()
         {
             
+        }
+
+        private void UpdateGroundedState()
+        {
+            Physics2D.OverlapBox( groundedCollider.transform.position , groundedCollider.size , groundedCollider.transform.eulerAngles.z , 1 & gameObject.layer );
         }
 
     }
