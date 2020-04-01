@@ -12,7 +12,7 @@ namespace Gamaga
         private void Update()
         {
             Vector2 m = new Vector2( Input.GetAxisRaw("Horizontal") , Input.GetAxisRaw("Vertical") );
-            character.HandleInput(m);
+            character.HandleInput(m * speed);
 
             if (Input.GetButtonDown("Jump"))
             {

@@ -10,6 +10,11 @@ namespace Gamaga
         protected SpriteRenderer render = null;
         protected Animator animator = null;
 
+        protected int isFacingRightHash = Animator.StringToHash("isFacingRight");
+        protected int isJumpingHash = Animator.StringToHash("isJumping");
+        protected int isGroundedHash = Animator.StringToHash("isGrounded");
+        protected int isRunningHash = Animator.StringToHash("isRunning");
+
         private void Awake()
         {
             GetReferences();

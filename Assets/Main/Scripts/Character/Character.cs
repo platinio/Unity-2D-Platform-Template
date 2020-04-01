@@ -8,15 +8,16 @@ namespace Gamaga.CharacterSystem
         [SerializeField] private bool airControll = false;
 
         private bool isJumping = false;
-        private bool isMovingRight = true;
+        private bool isFacingRight = true;
         private bool isGrounded = false;
+        private bool isRunning = true;
 
         private Vector2 velocitySmooth = Vector2.zero;
 
         private void Update()
-        {
+        {            
             UpdateAnimator();
-            UpdateGroundedState();
+            UpdateCharacterState();
         }
 
         public void HandleInput(Vector2 m)
@@ -41,16 +42,34 @@ namespace Gamaga.CharacterSystem
         {            
             m.y = rb.velocity.y;
             rb.velocity = m;
+            isRunning = true;
         }
 
         private void SetFacingDirection()
         {
-            isMovingRight = rb.velocity.x > 0.0f;
+            if (rb.velocity.x > 0.0f && !isFacingRight)
+            {
+                Flip();
+            }
+            else if (rb.velocity.x < 0.0f && isFacingRight)
+            {
+                Flip();
+            }
+        }
+
+        private void Flip()
+        {
+            Vector3 newScale = transform.localScale;
+            newScale.x *= -1;
+            transform.localScale = newScale;
+
+            isFacingRight = !isFacingRight;
         }
 
         private void Stop()
         {
             rb.velocity = new Vector2( 0.0f , rb.velocity.y );
+            isRunning = false;
         }
 
         public void Jump(float force)
@@ -60,12 +79,20 @@ namespace Gamaga.CharacterSystem
 
         private void UpdateAnimator()
         {
-            
+            animator.SetBool( isJumpingHash , isJumping );            
+            animator.SetBool( isGroundedHash , isGrounded );
+            animator.SetBool( isRunningHash , isRunning );
         }
 
-        private void UpdateGroundedState()
+        private void UpdateCharacterState()
         {
-            isGrounded = IsTouchingTheGround();            
+            isGrounded = IsTouchingTheGround();
+
+            if (isJumping && isGrounded)
+            {
+                isJumping = false;
+            }
+
         }
 
         private bool IsTouchingTheGround()
