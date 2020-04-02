@@ -13,6 +13,7 @@ namespace Gamaga.AI
         {
             base.OnEnterState();
             idleTimer = Random.Range( minIdleTime , maxIdleTime );
+            AI.Stop();
         }
 
         public override int GetStateIndex()
