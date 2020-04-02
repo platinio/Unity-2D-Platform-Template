@@ -22,7 +22,7 @@ namespace Gamaga.CharacterSystem
 
         public void HandleInput(Vector2 m)
         {
-            if (m.magnitude < 0.01f && CanMove())
+            if (Mathf.Abs( m.x ) < 0.01f && CanMove())
             {
                 Stop();
             }
