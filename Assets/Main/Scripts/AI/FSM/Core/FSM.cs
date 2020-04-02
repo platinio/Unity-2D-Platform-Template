@@ -1,8 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace VRShooterKit.AI
+
+
+namespace Gamaga.AI
 {
+    public enum AIStateType
+    {
+        Idle,
+        Patrol,
+        Die
+    }
+
     //this is just a handy implementation of a Finite State Machine
     public class FSM : MonoBehaviour
     {

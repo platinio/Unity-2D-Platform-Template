@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VRShooterKit.AI
+namespace Gamaga.AI
 {
     /// <summary>
     /// Basic class for all FSM States

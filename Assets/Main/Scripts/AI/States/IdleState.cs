@@ -1,18 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class IdleState : MonoBehaviour
+namespace Gamaga.AI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class IdleState : AIState
     {
-        
+        [SerializeField] private float minIdleTime = 1.0f;
+        [SerializeField] private float maxIdleTime = 5.0f;
+
+        private float idleTimer = 0.0f;
+
+        public override void OnEnterState()
+        {
+            base.OnEnterState();
+            idleTimer = Random.Range( minIdleTime , maxIdleTime );
+        }
+
+        public override int GetStateIndex()
+        {
+            return (int)AIStateType.Idle;
+        }
+
+        public override int OnUpdate()
+        {
+            idleTimer -= Time.deltaTime;
+
+            if (idleTimer > 0.0f)
+                return (int)AIStateType.Idle;
+
+            return (int)AIStateType.Patrol;
+
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+
+
