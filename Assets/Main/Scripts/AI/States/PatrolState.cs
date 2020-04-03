@@ -37,7 +37,7 @@ namespace Gamaga.AI
             }
 
             float distanceToPatrolPoint = Mathf.Abs( transform.position.x - nextPatrolPoint.position.x ); //Vector2.Distance(transform.position, nextPatrolPoint.position);
-            Debug.Log(distanceToPatrolPoint);
+
             if (distanceToPatrolPoint < minDistanceToPatrolPoint)
             {
                 return (int)AIStateType.Idle;

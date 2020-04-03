@@ -9,6 +9,7 @@ namespace Gamaga.DamageSystem
         [SerializeField] private OnValueChangeEvent onHpChange;
 
         public OnValueChangeEvent OnHPChange { get { return onHpChange; } }
+        public int HP { get { return hp; } }
 
         private void Start()
         {
