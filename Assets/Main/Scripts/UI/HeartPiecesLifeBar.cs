@@ -15,6 +15,7 @@ namespace Gamaga.UI
         private void Awake()
         {
             CreateHearts();
+            damageableManager.OnDamage.AddListener(delegate (DamageInfo info){ DecreaseValue(info.dmg); });
         }
 
         private void CreateHearts()
@@ -45,7 +46,7 @@ namespace Gamaga.UI
             return heart;
         }
 
-        private void OnHPValueChange(int value)
+        private void DecreaseValue(int value)
         {
             if (heartIndex < 0)
                 return;
@@ -53,10 +54,10 @@ namespace Gamaga.UI
             int result = heartArray[heartIndex].CurrentValue - value;
 
             if (result < 0)
-            {
-                heartIndex--;
+            {               
                 heartArray[heartIndex].SetValue(0);
-                OnHPValueChange(Mathf.Abs(result));
+                heartIndex--;
+                DecreaseValue(Mathf.Abs(result));
             }
             else
             {

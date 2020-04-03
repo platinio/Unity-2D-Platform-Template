@@ -11,7 +11,7 @@ namespace Gamaga.UI
         {
             get 
             {
-                return Mathf.RoundToInt( heartImg.fillAmount ) * MAX_PIECES; 
+                return (int)(heartImg.fillAmount * MAX_PIECES); 
             }
         }
 
@@ -20,7 +20,6 @@ namespace Gamaga.UI
         public void SetValue(int value)
         {
             heartImg.fillAmount = (float) value / (float) MAX_PIECES;
-            Debug.Log((float)value / (float)MAX_PIECES);
         }
 
     }

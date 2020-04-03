@@ -6,20 +6,16 @@ namespace Gamaga.DamageSystem
     public class DamageableManager : MonoBehaviour, IDamageable
     {
         [SerializeField] private int hp = 0;
-        [SerializeField] private OnValueChangeEvent onHpChange;
+        [SerializeField] private OnDamageEvent onDamage;
 
-        public OnValueChangeEvent OnHPChange { get { return onHpChange; } }
+        public OnDamageEvent OnDamage { get { return onDamage; } }
         public int HP { get { return hp; } }
 
-        private void Start()
-        {
-            onHpChange.Invoke( hp );
-        }
 
         public void DoDamage(DamageInfo info)
         {
             hp -= info.dmg;
-            onHpChange.Invoke(hp);
+            onDamage.Invoke(info);
         }
     }
 }
