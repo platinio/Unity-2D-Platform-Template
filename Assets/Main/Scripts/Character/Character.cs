@@ -17,6 +17,8 @@ namespace Gamaga.CharacterSystem
         private const float HIT_TIME = 1.0f;
         private float hitTimer = 0.0f;
 
+        public bool DebugModeOn { get { return debugModeOn; } }
+
         private void Update()
         {            
             UpdateAnimator();
@@ -35,11 +37,12 @@ namespace Gamaga.CharacterSystem
         }
 
         public void HandleInput(Vector2 m)
-        {
+        {          
+
             if (isHit)
                 return;
 
-            if (Mathf.Abs( m.x ) < 0.01f && CanMove())
+            if (Mathf.Abs(m.x) < 0.01f && CanMove())
             {
                 Stop();
             }
