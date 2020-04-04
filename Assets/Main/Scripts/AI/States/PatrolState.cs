@@ -24,8 +24,7 @@ namespace Gamaga.AI
         }
 
         public override int OnUpdate()
-        {
-            Debug.Log("Patroling");
+        {           
             Vector2 dir = (nextPatrolPoint.position - transform.position).normalized;
 
             if (dir.x > 0)

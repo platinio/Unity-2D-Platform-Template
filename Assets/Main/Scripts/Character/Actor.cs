@@ -5,6 +5,7 @@ namespace Gamaga
     public class Actor : MonoBehaviour
     {
         [SerializeField] protected BoxCollider2D groundedCollider = null;
+        [SerializeField] [Range(0.1f, 1.0f)] private float animatorSpeed = 1.0f;
 
         protected Rigidbody2D rb = null;
         protected SpriteRenderer render = null;
@@ -15,7 +16,7 @@ namespace Gamaga
         protected int isGroundedHash = Animator.StringToHash("isGrounded");
         protected int isRunningHash = Animator.StringToHash("isRunning");
 
-        private void Awake()
+        protected virtual void Awake()
         {
             GetReferences();
         }
@@ -25,11 +26,14 @@ namespace Gamaga
             rb = GetComponent<Rigidbody2D>();
             render = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+
+            Initialize();
         }
 
         private void Initialize()
         {
             groundedCollider.enabled = false;
+            animator.speed = animatorSpeed;
         }
 
     }
