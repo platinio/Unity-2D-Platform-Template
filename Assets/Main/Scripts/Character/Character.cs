@@ -57,7 +57,8 @@ namespace Gamaga.CharacterSystem
         public void HandleHit(Vector2 force , ForceMode2D forceMode)
         {
             hitTimer = hitTime;
-            isHit = true;            
+            isHit = true;
+            isRunning = false;
             animator.SetTrigger("Hit");
 
             StopAndAddForce( force , forceMode );
@@ -112,7 +113,15 @@ namespace Gamaga.CharacterSystem
 
         public void Jump(float force)
         {
-            rb.AddForce( Vector2.up * force );
+            if (!CanJump())
+                return;
+
+            StopAndAddForce(force * Vector2.up , ForceMode2D.Force);
+        }
+
+        private bool CanJump()
+        {
+            return isGrounded && !isHit;
         }
 
         private void UpdateAnimator()
