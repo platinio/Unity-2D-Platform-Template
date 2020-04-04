@@ -15,6 +15,7 @@ namespace Gamaga
         protected int isJumpingHash = Animator.StringToHash("isJumping");
         protected int isGroundedHash = Animator.StringToHash("isGrounded");
         protected int isRunningHash = Animator.StringToHash("isRunning");
+        protected int isDeadHash = Animator.StringToHash("isDead");
 
         protected virtual void Awake()
         {

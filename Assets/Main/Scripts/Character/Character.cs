@@ -131,6 +131,7 @@ namespace Gamaga.CharacterSystem
             animator.SetBool( isJumpingHash , isJumping );            
             animator.SetBool( isGroundedHash , isGrounded );
             animator.SetBool( isRunningHash , isRunning );
+            animator.SetBool( isDeadHash , isDead );
         }
 
         private void UpdateCharacterState()
