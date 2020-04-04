@@ -9,7 +9,7 @@ namespace Gamaga.InputSystem
         {
             get 
             {
-                #if UNITY_STANDALONE 
+                #if UNITY_STANDALONE || UNITY_EDITOR
                 Vector2 input = new Vector2( Input.GetAxisRaw("Horizontal") , Input.GetAxisRaw("Vertical") );
                 return input;
                 #else
@@ -23,7 +23,7 @@ namespace Gamaga.InputSystem
         {
             get
             {
-                #if UNITY_STANDALONE
+                #if UNITY_STANDALONE || UNITY_EDITOR
                 return Input.GetButtonDown("Jump");
                 #else
                 return InputManager.GetAxis("Jump") > 0.5f;

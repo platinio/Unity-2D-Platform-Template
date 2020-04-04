@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Gamaga
+namespace Gamaga.CharacterSystem
 {
     public class Actor : MonoBehaviour
     {

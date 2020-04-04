@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using Gamaga.CharacterSystem;
+using Gamaga.DamageSystem;
+using Gamaga.GameLogic;
+
 
 
 namespace Gamaga.AI
@@ -8,6 +11,7 @@ namespace Gamaga.AI
     {
         [SerializeField] private Character character = null;
         [SerializeField] private float walkSpeed = 0.0f;
+
 
         public void MoveLeft()
         {

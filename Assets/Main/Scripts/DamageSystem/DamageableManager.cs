@@ -25,8 +25,13 @@ namespace Gamaga.DamageSystem
             {
                 onDead.Invoke();
             }
-
         }
+
+        public void SetHP(int hp)
+        {
+            this.hp = hp;
+        }
+
     }
 }
 

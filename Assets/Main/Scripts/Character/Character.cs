@@ -5,6 +5,7 @@ namespace Gamaga.CharacterSystem
 {
     public class Character : Actor
     {
+        [SerializeField] private CharacterStats stats = null;
         [SerializeField] private LayerMask groundLayerMask;
         [SerializeField] private bool airControll = false;
         [SerializeField] private float hitTime = 1.0f;        
@@ -18,7 +19,18 @@ namespace Gamaga.CharacterSystem
         private bool isDead = false;
                 
         private float hitTimer = 0.0f;
-               
+        
+        protected override void Awake()
+        {
+            base.Awake();
+            SetUpDamageable( stats );
+        }
+
+        private void SetUpDamageable(CharacterStats stats)
+        {
+            DamageableManager damageable = gameObject.GetOrAddComponent<DamageableManager>();
+            damageable.SetHP(stats.HP);            
+        }
 
         private void Update()
         {            
@@ -44,6 +56,8 @@ namespace Gamaga.CharacterSystem
 
             if (isHit)
                 return;
+
+            m *= stats.Speed;
 
             if (Mathf.Abs(m.x) < 0.01f && CanMove())
             {
@@ -116,12 +130,12 @@ namespace Gamaga.CharacterSystem
             isRunning = false;
         }
 
-        public void Jump(float force)
+        public void Jump()
         {
             if (!CanJump())
                 return;
 
-            StopAndAddForce(force * Vector2.up , ForceMode2D.Force);
+            StopAndAddForce(stats.JumpForce * Vector2.up , ForceMode2D.Force);
         }
 
         private bool CanJump()

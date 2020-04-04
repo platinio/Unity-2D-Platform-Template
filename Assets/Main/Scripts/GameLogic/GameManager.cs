@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using Gamaga.UI;
+using Platinio;
 
-namespace Gamaga
+namespace Gamaga.GameLogic
 {
-    public class GameManager : MonoBehaviour
-    {
+    public class GameManager : Singleton<GameManager>
+    {        
         [SerializeField] private SpriteRenderer playerSR = null;
         [SerializeField] private SpriteRenderer gameOverSR = null;
         [SerializeField] private Popup gameOverPopup = null;
 
         private const string GameOverLayerName = "GameOver";
+
 
         private void Awake()
         {

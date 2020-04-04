@@ -243,6 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundedCollider: {fileID: 3890406560465177369}
   animatorSpeed: 1
+  stats: {fileID: 11400000, guid: dd25b3978b5d57844a899bf0f0bfa4b4, type: 2}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 512
@@ -380,5 +381,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 3890406561694197336}
-  speed: 2
-  jumpForce: 1800
