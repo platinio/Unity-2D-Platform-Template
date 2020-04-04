@@ -10,12 +10,18 @@ namespace Gamaga.GameLogic
         [SerializeField] private SpriteRenderer playerSR = null;
         [SerializeField] private SpriteRenderer gameOverSR = null;
         [SerializeField] private Popup gameOverPopup = null;
+        [SerializeField] private GameObject mobileInputCanvas = null;
 
         private const string GameOverLayerName = "GameOver";
 
 
-        private void Awake()
+        protected override void Awake()
         {
+            #if UNITY_ANDROID && !UNITY_EDITOR
+            Instantiate(mobileInputCanvas);
+            #endif
+
+            base.Awake();
             Time.timeScale = 1.0f;
         }
 

@@ -19,6 +19,7 @@ namespace Gamaga.CharacterSystem
         private bool isDead = false;
                 
         private float hitTimer = 0.0f;
+        private int numberOfJumps = 0;
         
         protected override void Awake()
         {
@@ -135,12 +136,13 @@ namespace Gamaga.CharacterSystem
             if (!CanJump())
                 return;
 
+            numberOfJumps++;
             StopAndAddForce(stats.JumpForce * Vector2.up , ForceMode2D.Force);
         }
 
         private bool CanJump()
         {
-            return !isDead && (isGrounded && !isHit);
+            return !isDead && ( (isGrounded || numberOfJumps + 1 < stats.MaxNumberOfJumps) && !isHit );
         }
 
         private void UpdateAnimator()
@@ -154,6 +156,11 @@ namespace Gamaga.CharacterSystem
         private void UpdateCharacterState()
         {
             isGrounded = IsTouchingTheGround();
+
+            if (isGrounded && numberOfJumps > 0)
+            {
+                numberOfJumps = 0;
+            }
 
             if (isJumping && isGrounded)
             {
