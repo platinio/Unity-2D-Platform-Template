@@ -58,6 +58,9 @@ namespace Gamaga.CharacterSystem
 
         public void HandleDamage(DamageInfo info)
         {
+            if (isDead)
+                return;
+
             hitTimer = hitTime;
             isHit = true;
             isRunning = false;
