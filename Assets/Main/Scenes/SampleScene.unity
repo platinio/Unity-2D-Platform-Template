@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129a63b86b3b21c49bd4286e96094eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 3
   pushForce: 20
   forceMode: 1
 --- !u!61 &717620422
@@ -1212,14 +1212,44 @@ MonoBehaviour:
   hp: 16
   onDamage:
     m_PersistentCalls:
-      m_Calls: []
-  rb: {fileID: 1753299489}
---- !u!50 &1753299489 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 6710931273816175576, guid: e66828c5d9cf49c45958d764f3afd14e,
+      m_Calls:
+      - m_Target: {fileID: 1753299492}
+        m_MethodName: HandleDamage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1753299492}
+        m_MethodName: Kill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1753299492 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6710931273816175558, guid: e66828c5d9cf49c45958d764f3afd14e,
     type: 3}
   m_PrefabInstance: {fileID: 6710931271707622455}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753299486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f47309003484f114fb89552e08fec280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!247 &1753299494
 ConstantForce2D:
   m_ObjectHideFlags: 0
