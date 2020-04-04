@@ -89,6 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heartImg: {fileID: 8957057054734972875}
+  animationTime: 0.5
+  ease: 13
 --- !u!1 &8957057054885925719
 GameObject:
   m_ObjectHideFlags: 0

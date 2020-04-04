@@ -801,7 +801,7 @@ MonoBehaviour:
   target: {fileID: 2112753652}
   followSmooth: 1.02
   offset: {x: 3, y: 0, z: -5}
-  mirrorTime: 0.1
+  mirrorTime: 0.07
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -814,7 +814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetsPPU: 30
+  m_AssetsPPU: 35
   m_RefResolutionX: 320
   m_RefResolutionY: 180
   m_UpscaleRT: 0
@@ -1231,51 +1231,6 @@ ConstantForce2D:
   m_Force: {x: 0.5, y: 0}
   m_RelativeForce: {x: 0, y: 0}
   m_Torque: 0
---- !u!1 &1769411093
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1769411095}
-  - component: {fileID: 1769411094}
-  m_Layer: 0
-  m_Name: DMGTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1769411094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769411093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14fc29db35de44a47b311b526e45a183, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmgManager: {fileID: 1753299487}
-  dmg: 5
---- !u!4 &1769411095
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769411093}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 144.29651, y: 980.3237, z: -233}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1964914846
 GameObject:
   m_ObjectHideFlags: 0

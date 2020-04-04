@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Gamaga.DamageSystem;
 
 namespace Gamaga.CharacterSystem
 {
@@ -14,6 +15,7 @@ namespace Gamaga.CharacterSystem
         private bool isGrounded = false;
         private bool isRunning = true;
         private bool isHit = false;
+        private bool isDead = false;
                 
         private float hitTimer = 0.0f;
                
@@ -54,14 +56,14 @@ namespace Gamaga.CharacterSystem
             }
         }
 
-        public void HandleHit(Vector2 force , ForceMode2D forceMode)
+        public void HandleDamage(DamageInfo info)
         {
             hitTimer = hitTime;
             isHit = true;
             isRunning = false;
             animator.SetTrigger("Hit");
 
-            StopAndAddForce( force , forceMode );
+            StopAndAddForce( info.force * info.dir , info.forceMode );
             
         }
 
@@ -74,7 +76,7 @@ namespace Gamaga.CharacterSystem
 
         private bool CanMove()
         {
-            return isGrounded || airControll;
+            return !isDead && (isGrounded || airControll);
         }
 
         private void Move(Vector2 m)
@@ -121,7 +123,7 @@ namespace Gamaga.CharacterSystem
 
         private bool CanJump()
         {
-            return isGrounded && !isHit;
+            return !isDead && (isGrounded && !isHit);
         }
 
         private void UpdateAnimator()
@@ -153,6 +155,10 @@ namespace Gamaga.CharacterSystem
             return Physics2D.OverlapBox(groundedCollider.transform.position, groundedCollider.size, groundedCollider.transform.eulerAngles.z, groundLayerMask.value);
         }
 
+        public void Kill()
+        {
+            isDead = true;
+        }
 
     }
 

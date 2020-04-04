@@ -8,7 +8,7 @@ namespace Gamaga.UI
         [SerializeField] private DamageableManager damageableManager = null;
         [SerializeField] private Heart heartPrefab = null;
         [SerializeField] private Transform heartContainer = null;
-
+        
         private Heart[] heartArray = null;
         private int heartIndex = 0;
 
