@@ -223,7 +223,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113790416}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.45794725, y: 0.34849742, z: 10.37682}
+  m_LocalPosition: {x: 0.45794725, y: 0.33, z: 10.37682}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 485041927}
@@ -288,11 +288,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundedCollider: {fileID: 485041928}
+  animatorSpeed: 0.65
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  airControll: 0
-  debugModeOn: 0
+  airControll: 1
+  hitTime: 1
 --- !u!50 &113790424
 Rigidbody2D:
   serializedVersion: 4
@@ -573,7 +574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  pushForce: 25
+  pushForce: 20
   forceMode: 1
 --- !u!61 &717620422
 BoxCollider2D:
@@ -1497,6 +1498,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingOrder
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710931273816175558, guid: e66828c5d9cf49c45958d764f3afd14e,
+        type: 3}
+      propertyPath: hitTime
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: 6710931273816175578, guid: e66828c5d9cf49c45958d764f3afd14e,
         type: 3}
