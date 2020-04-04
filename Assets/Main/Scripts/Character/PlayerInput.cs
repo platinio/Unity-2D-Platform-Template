@@ -1,24 +1,34 @@
-﻿using UnityEngine;
-using Gamaga.CharacterSystem;
+﻿
+using UnityEngine;
 
-namespace Gamaga
+namespace Gamaga.InputSystem
 {
-    public class PlayerInput : MonoBehaviour
+    public static class PlayerInput 
     {
-        [SerializeField] private Character character = null;
-        [SerializeField] private float speed = 5.0f;
-        [SerializeField] private float jumpForce = 50.0f;
-
-        private void Update()
+        public static Vector2 JoystickInput
         {
-            Vector2 m = new Vector2( Input.GetAxisRaw("Horizontal") , Input.GetAxisRaw("Vertical") );
-            character.HandleInput(m * speed);
-
-            if (Input.GetButtonDown("Jump"))
+            get 
             {
-                character.Jump(jumpForce);
+                #if UNITY_STANDALONE || UNITY_EDITOR
+                Vector2 input = new Vector2( Input.GetAxis("Horizontal") , Input.GetAxis("Vertical") );
+                return input;
+                #else
+                Vector2 input = new Vector2(InputManager.GetAxis("Horizontal"), InputManager.GetAxis("Vertical"));
+                return input;
+                #endif
             }
+        }
 
+        public static bool Jump
+        {
+            get
+            {
+                #if UNITY_STANDALONE || UNITY_EDITOR
+                return Input.GetKeyDown(KeyCode.Space);
+                #else
+                return InputManager.GetAxis("Jump") > 0.0f;
+                #endif
+            }
         }
 
     }

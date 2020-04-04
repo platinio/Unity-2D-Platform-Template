@@ -53,8 +53,8 @@ namespace Gamaga.InputSystem
 				Hide(true);
 
 			//create the axis
-			JoystickAxis.CreateAxis(m_horizontalAxisName);
-			JoystickAxis.CreateAxis(m_verticalAxisName);
+			InputManager.CreateAxis(m_horizontalAxisName);
+			InputManager.CreateAxis(m_verticalAxisName);
 		}
 
 
@@ -100,16 +100,16 @@ namespace Gamaga.InputSystem
 
 
 			//updateaxis value
-			JoystickAxis.SetAxis(m_horizontalAxisName, m.x);
-			JoystickAxis.SetAxis(m_verticalAxisName, m.y);
+			InputManager.SetAxis(m_horizontalAxisName, m.x);
+			InputManager.SetAxis(m_verticalAxisName, m.y);
 			m_stickRect.position = stickPos;
 		}
 
 		public void OnPointerUp(PointerEventData eventData)
 		{
 			//set valus to 0
-			JoystickAxis.SetAxis(m_horizontalAxisName, 0.0f);
-			JoystickAxis.SetAxis(m_verticalAxisName, 0.0f);
+			InputManager.SetAxis(m_horizontalAxisName, 0.0f);
+			InputManager.SetAxis(m_verticalAxisName, 0.0f);
 
 			m_stickRect.anchoredPosition = Vector2.zero;
 			m_baseRect.position = m_baseInitialPos;
