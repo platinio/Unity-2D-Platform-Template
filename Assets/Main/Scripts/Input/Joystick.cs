@@ -19,42 +19,42 @@ namespace Gamaga.InputSystem
 	{
 
 		#region INSPECTOR
-		[SerializeField] MovementDirection m_movementDirection = MovementDirection.Both;
-		[SerializeField] private float m_movementRange = 40.0f;
-		[SerializeField] private string m_horizontalAxisName = "Horizontal";
-		[SerializeField] private string m_verticalAxisName = "Vertical";
-		[SerializeField] private Image m_base = null;
-		[SerializeField] private Image m_stick = null;
-		[SerializeField] private bool m_hideOnRelease = false;
-		[SerializeField] private bool m_useDistance = false;
+		[SerializeField] MovementDirection movementDirection = MovementDirection.Both;
+		[SerializeField] private float movementRange = 40.0f;
+		[SerializeField] private string horizontalAxisName = "Horizontal";
+		[SerializeField] private string verticalAxisName = "Vertical";
+		[SerializeField] private Image baseStick = null;
+		[SerializeField] private Image stick = null;
+		[SerializeField] private bool hideOnRelease = false;
+		[SerializeField] private bool useDistance = false;
 		#endregion
 
 		#region PRIVATE
-		private RectTransform m_stickRect = null;
-		private RectTransform m_baseRect = null;
-		private Vector2 m_stickCenterPos = Vector2.zero;
-		private Vector2 m_stickInitialPos = Vector2.zero;
-		private Vector2 m_baseInitialPos = Vector2.zero;
+		private RectTransform stickRect = null;
+		private RectTransform baseRect = null;
+		private Vector2 stickCenterPos = Vector2.zero;
+		private Vector2 stickInitialPos = Vector2.zero;
+		private Vector2 baseInitialPos = Vector2.zero;
 		#endregion
 
 		void Start()
 		{
 			//get references
-			m_stickRect = m_stick.GetComponent<RectTransform>();
-			m_baseRect = m_base.GetComponent<RectTransform>();
+			stickRect = stick.GetComponent<RectTransform>();
+			baseRect = baseStick.GetComponent<RectTransform>();
 
 			//initialize values
-			m_stickCenterPos = m_stickRect.position;
-			m_stickInitialPos = m_stickRect.position;
-			m_baseInitialPos = m_baseRect.position;
+			stickCenterPos = stickRect.position;
+			stickInitialPos = stickRect.position;
+			baseInitialPos = baseRect.position;
 
 			//hide the joystick
-			if (m_hideOnRelease)
+			if (hideOnRelease)
 				Hide(true);
 
 			//create the axis
-			InputManager.CreateAxis(m_horizontalAxisName);
-			InputManager.CreateAxis(m_verticalAxisName);
+			InputManager.CreateAxis(horizontalAxisName);
+			InputManager.CreateAxis(verticalAxisName);
 		}
 
 
@@ -65,78 +65,78 @@ namespace Gamaga.InputSystem
 
 
 			//restric joystick movement
-			if (m_movementDirection == MovementDirection.Vertical)
+			if (movementDirection == MovementDirection.Vertical)
 			{
-				stickPos.x = m_stickCenterPos.x;
+				stickPos.x = stickCenterPos.x;
 			}
-			else if (m_movementDirection == MovementDirection.Horizontal)
+			else if (movementDirection == MovementDirection.Horizontal)
 			{
-				stickPos.y = m_stickCenterPos.y;
+				stickPos.y = stickCenterPos.y;
 			}
 
 
 
-			Vector2 difference = new Vector2(stickPos.x, stickPos.y) - m_stickCenterPos;
+			Vector2 difference = new Vector2(stickPos.x, stickPos.y) - stickCenterPos;
 			float diffMagnitude = difference.magnitude;
 			Vector2 normalizedDifference = difference / diffMagnitude;
 
 			// if the joystick is out of range
-			if (diffMagnitude > m_movementRange)
+			if (diffMagnitude > movementRange)
 			{
-				stickPos = m_stickCenterPos + normalizedDifference * m_movementRange;
+				stickPos = stickCenterPos + normalizedDifference * movementRange;
 			}
 
-			Vector2 m = new Vector2(m_stickRect.position.x, m_stickRect.position.y) - new Vector2(m_baseRect.position.x, m_baseRect.position.y);
+			Vector2 m = new Vector2(stickRect.position.x, stickRect.position.y) - new Vector2(baseRect.position.x, baseRect.position.y);
 			m.Normalize();
 
 			//if we use distance, this is most commonf for vehicles or running etc
-			if (m_useDistance)
+			if (useDistance)
 			{
 				//distance from center to stcik
-				float distance = Vector2.Distance(stickPos, m_baseRect.position);
-				m = new Vector2(m.x * (distance / m_movementRange), m.y * (distance / m_movementRange));
+				float distance = Vector2.Distance(stickPos, baseRect.position);
+				m = new Vector2(m.x * (distance / movementRange), m.y * (distance / movementRange));
 			}
 
 
 
 			//updateaxis value
-			InputManager.SetAxis(m_horizontalAxisName, m.x);
-			InputManager.SetAxis(m_verticalAxisName, m.y);
-			m_stickRect.position = stickPos;
+			InputManager.SetAxis(horizontalAxisName, m.x);
+			InputManager.SetAxis(verticalAxisName, m.y);
+			stickRect.position = stickPos;
 		}
 
 		public void OnPointerUp(PointerEventData eventData)
 		{
 			//set valus to 0
-			InputManager.SetAxis(m_horizontalAxisName, 0.0f);
-			InputManager.SetAxis(m_verticalAxisName, 0.0f);
+			InputManager.SetAxis(horizontalAxisName, 0.0f);
+			InputManager.SetAxis(verticalAxisName, 0.0f);
 
-			m_stickRect.anchoredPosition = Vector2.zero;
-			m_baseRect.position = m_baseInitialPos;
+			stickRect.anchoredPosition = Vector2.zero;
+			baseRect.position = baseInitialPos;
 
-			if (m_hideOnRelease)
+			if (hideOnRelease)
 				Hide(true);
 		}
 
 		public void OnPointerDown(PointerEventData eventData)
 		{
 			//hide joystick
-			if (m_hideOnRelease)
+			if (hideOnRelease)
 			{
 				Hide(false);
 			}
 
-			m_baseRect.position = eventData.position; ;
-			m_stickRect.position = eventData.position;
-			m_stickCenterPos = eventData.position;
+			baseRect.position = eventData.position; ;
+			stickRect.position = eventData.position;
+			stickCenterPos = eventData.position;
 
 		}
 
 
 		private void Hide(bool hide)
 		{
-			m_stick.gameObject.SetActive(!hide);
-			m_base.gameObject.SetActive(!hide);
+			stick.gameObject.SetActive(!hide);
+			baseStick.gameObject.SetActive(!hide);
 		}
 
 

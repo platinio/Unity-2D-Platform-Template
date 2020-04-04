@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Gamaga.CharacterSystem;
+using Gamaga.InputSystem;
 
 namespace Gamaga
 {
@@ -11,10 +12,10 @@ namespace Gamaga
 
         private void Update()
         {
-            Vector2 m = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vector2 m = PlayerInput.JoystickInput;
             character.HandleInput(m * speed);
 
-            if (Input.GetButtonDown("Jump"))
+            if ( PlayerInput.Jump )
             {
                 character.Jump(jumpForce);
             }
