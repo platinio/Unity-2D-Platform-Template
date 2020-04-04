@@ -6,7 +6,8 @@ namespace Gamaga.DamageSystem
     {
         public int dmg;
         public float force;
-        public ForceMode forceMode;
+        public Vector2 dir;
+        public ForceMode2D forceMode;
         public GameObject sender;
     }
 

@@ -6,22 +6,39 @@ namespace Gamaga.CharacterSystem
     {
         [SerializeField] private LayerMask groundLayerMask;
         [SerializeField] private bool airControll = false;
+        [SerializeField] private bool debugModeOn = false;
 
         private bool isJumping = false;
         private bool isFacingRight = true;
         private bool isGrounded = false;
         private bool isRunning = true;
-
-        private Vector2 velocitySmooth = Vector2.zero;
+        private bool isHit = false;
+        
+        private const float HIT_TIME = 1.0f;
+        private float hitTimer = 0.0f;
 
         private void Update()
         {            
             UpdateAnimator();
             UpdateCharacterState();
+
+            if (hitTimer > 0.0f)
+            {
+                hitTimer -= Time.deltaTime;
+            }
+            else
+            {
+                isHit = false;
+            }
+                
+
         }
 
         public void HandleInput(Vector2 m)
         {
+            if (isHit)
+                return;
+
             if (Mathf.Abs( m.x ) < 0.01f && CanMove())
             {
                 Stop();
@@ -31,6 +48,15 @@ namespace Gamaga.CharacterSystem
                 Move(m);
                 SetFacingDirection();
             }
+        }
+
+        public void HandleHit(Vector2 force , ForceMode2D forceMode)
+        {
+            hitTimer = HIT_TIME;
+            isHit = true;
+            Debug.Log("setting trigger");
+            animator.SetTrigger("Hit");
+            rb.AddForce(force , forceMode);
         }
 
         private bool CanMove()
