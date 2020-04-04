@@ -13,9 +13,12 @@ namespace Gamaga
         {
             gameOverSR.Fade(0.9f , 2.0f).SetEase(Ease.EaseOutExpo).SetEvent(delegate 
             {                
-                playerSR.sortingLayerName = GameOverLayerName;
-                playerSR.sortingLayerID = 1;
-            } , 0.5f ).SetDelay(2.0f).SetOnComplete(delegate { Time.timeScale = 0.0f; });
+                playerSR.sortingLayerName = GameOverLayerName;                
+            } , 0.5f ).SetDelay(2.0f).SetOnComplete(
+            delegate            
+            { 
+
+            });
         }
     }
 
