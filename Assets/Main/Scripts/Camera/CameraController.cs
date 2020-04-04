@@ -12,7 +12,7 @@ namespace Gamaga
 
         private Vector2 velocity = Vector2.zero;
         private Vector2 lastTargetPostion = Vector2.zero;
-        private float mirrorTimer = 0.0f;
+        private float mirrorTimer = float.MinValue;
         private int cameraFacingDirection = 1;
 
 
@@ -41,8 +41,9 @@ namespace Gamaga
         }
 
         private bool ShouldMirrorCamera()
-        {
-            return GetTargetMovingDirection() != cameraFacingDirection;
+        {           
+           
+           return GetTargetMovingDirection() != cameraFacingDirection;
         }
 
         private void FollowTarget()
