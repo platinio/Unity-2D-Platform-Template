@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 20
   dmg: 1
-  speed: 2
+  speed: 20
   jumpForce: 1800
+  maxNumberOfJumps: 1

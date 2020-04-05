@@ -11,7 +11,9 @@ namespace Gamaga
         private Vector2 startPosition = Vector2.zero;       
         private Transform mainCamera = null;  
         private SpriteRenderer render = null;
-        
+
+        public bool debugModeOn = false;
+
         private void Awake()
         {
             Initialize();
@@ -40,16 +42,17 @@ namespace Gamaga
         private void UpdateParallaxEffect()
         {
             float parallax = (mainCamera.position.x * parallaxSpeed);
-            transform.position = new Vector3(startPosition.x + parallax, startPosition.y, transform.position.z);            
+            transform.position = new Vector3(startPosition.x + parallax, transform.position.y, transform.position.z);            
         }
 
         private void CheckParallaxBounds()
         {
             float d = Mathf.Abs(transform.position.x - mainCamera.position.x);
-            if (d > spriteSize * 0.4f)
+            
+            if (d > spriteSize * 0.6f)
             {
                 float dir = Mathf.Sign(mainCamera.transform.position.x - transform.position.x);
-                startPosition.y += spriteSize * dir;
+                startPosition.x += spriteSize * dir;
             }
         }
 

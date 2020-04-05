@@ -9,17 +9,29 @@ namespace Gamaga
         [SerializeField] [Range(0.1f, 2.0f)] private float followSmooth = 2.0f;
         [SerializeField] private Vector3 offset = Vector2.zero;
         [SerializeField] private float mirrorTime = 0.25f;
+        [SerializeField] private BoxCollider2D cameraLimit = null;
 
+
+        private Vector2 minCameraposition = Vector2.zero;
+        private Vector2 maxCameraPosition = Vector2.zero;
         private Vector2 velocity = Vector2.zero;
         private Vector2 lastTargetPostion = Vector2.zero;
         private float mirrorTimer = float.MinValue;
         private int cameraFacingDirection = 1;
 
+        private void Awake()
+        {
+            Vector2 cameraLimitCenter = cameraLimit.transform.position;
+            cameraLimitCenter += cameraLimit.offset;
+            minCameraposition = new Vector2( cameraLimitCenter.x - ( cameraLimit.size.x / 2.0f ) , cameraLimitCenter.y - (cameraLimit.size.y / 2.0f));
+            maxCameraPosition = new Vector2(cameraLimitCenter.x + (cameraLimit.size.x / 2.0f), cameraLimitCenter.y + (cameraLimit.size.y / 2.0f));
+        }
 
         private void FixedUpdate()
         {
             MirrorUpdate();
-            FollowTarget();            
+            FollowTarget();
+            ClampCameraPosition();
         }
 
         private void MirrorUpdate()
@@ -83,6 +95,36 @@ namespace Gamaga
         {
             offset.x *= -1;
             cameraFacingDirection *= -1;
+        }
+
+        private void ClampCameraPosition()
+        {
+            Vector3 currentPosition = transform.position;
+
+            if (currentPosition.y > maxCameraPosition.y)
+            {
+                currentPosition.y = maxCameraPosition.y;
+            }
+
+            else if (currentPosition.y < minCameraposition.y)
+            {
+                currentPosition.y = minCameraposition.y;
+            }
+            
+            float horizontalTargetDiff = target.transform.position.x - transform.position.x;
+            
+            if (horizontalTargetDiff > maxCameraPosition.x)
+            {
+                currentPosition.x = target.transform.position.x - maxCameraPosition.x;
+            }
+            
+            if (horizontalTargetDiff < minCameraposition.x)
+            {
+                currentPosition.x = target.transform.position.x - minCameraposition.x;
+            }
+
+            transform.position = currentPosition;
+
         }
     }
 }
