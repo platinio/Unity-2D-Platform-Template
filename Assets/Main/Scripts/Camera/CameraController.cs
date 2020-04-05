@@ -82,7 +82,7 @@ namespace Gamaga
         private int GetTargetMovingDirection()
         {
             Vector2 dir = new Vector2(target.transform.position.x, target.transform.position.y) - lastTargetPostion;
-            Debug.Log(dir.x);
+
             if (Mathf.Abs( dir.x ) < 0.000001f)
                 return 0;
 

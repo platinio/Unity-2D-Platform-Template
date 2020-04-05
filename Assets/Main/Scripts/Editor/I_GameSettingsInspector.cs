@@ -20,7 +20,12 @@ namespace Gamaga.EditorCode
             EditorGUILayout.LabelField("Player Settings", EditorStyles.boldLabel);
             DrawCharacterStats(settings.PlayerStats, "Player");
             EditorGUILayout.LabelField("Enemy Settings", EditorStyles.boldLabel);
-            DrawCharacterStats(settings.EnemyStats , "Skeleton");            
+            DrawCharacterStats(settings.EnemyStats , "Skeleton");
+
+            if (GUILayout.Button("Set DefaultValues"))
+            {
+                settings.SetDefaultValues();
+            }
 
         }
 
@@ -37,6 +42,8 @@ namespace Gamaga.EditorCode
             stats.DMG = EditorGUILayout.IntField("Damage", stats.DMG);
             stats.JumpForce = EditorGUILayout.FloatField("Jump Force", stats.JumpForce);
             stats.MaxNumberOfJumps = EditorGUILayout.IntField("Max Number Of Jumps", stats.MaxNumberOfJumps);
+
+            EditorUtility.SetDirty(stats);
         }
 
     }

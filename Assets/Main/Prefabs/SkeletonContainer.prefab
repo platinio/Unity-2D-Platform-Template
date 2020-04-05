@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129a63b86b3b21c49bd4286e96094eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
   pushForce: 20
   forceMode: 1
 --- !u!61 &4386056519855132143
@@ -181,7 +180,7 @@ GameObject:
   - component: {fileID: 4386056520191575292}
   - component: {fileID: 4386056520191575293}
   - component: {fileID: 4386056520191575283}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +240,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 985644751
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7928858964255100155, guid: 41cd98810d2579a47903750f4df22798,
     type: 3}
@@ -331,6 +330,8 @@ MonoBehaviour:
     m_Bits: 512
   airControll: 1
   hitTime: 1
+  dealDamageArray:
+  - {fileID: 4386056519855132138}
 --- !u!114 &4386056520191575295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,13 +388,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cd5520f29c1d72469087f65387e9b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
   onDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4386056520191575294}
+        m_MethodName: HandleDamage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onDead:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4386056520191575294}
+        m_MethodName: Kill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4386056519855132140}
+        m_MethodName: Destroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  inmunityTime: 0.5
 --- !u!1 &4386056520283729362
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +452,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4386056520283729362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalPosition: {x: 3.09, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4386056520049318493}
@@ -448,7 +482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4386056520578786306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.24, y: 0, z: 0}
+  m_LocalPosition: {x: -4.9, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4386056520049318493}

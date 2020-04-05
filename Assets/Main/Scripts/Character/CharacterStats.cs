@@ -16,7 +16,7 @@ namespace Gamaga.CharacterSystem
         public float Speed { get { return speed; } set { speed = value; } }
         public float JumpForce { get { return jumpForce; } set { jumpForce = value; } }
         public int MaxNumberOfJumps { get { return maxNumberOfJumps; } set { maxNumberOfJumps = value; } }
-        
 
+       
     }
 }

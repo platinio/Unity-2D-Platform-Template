@@ -10,6 +10,7 @@ namespace Gamaga.CharacterSystem
         protected Rigidbody2D rb = null;
         protected SpriteRenderer render = null;
         protected Animator animator = null;
+        protected CapsuleCollider2D thisCollider = null;
 
         protected int isFacingRightHash = Animator.StringToHash("isFacingRight");
         protected int isJumpingHash = Animator.StringToHash("isJumping");
@@ -27,6 +28,7 @@ namespace Gamaga.CharacterSystem
             rb = GetComponent<Rigidbody2D>();
             render = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+            thisCollider = GetComponent<CapsuleCollider2D>();
 
             Initialize();
         }
@@ -36,6 +38,12 @@ namespace Gamaga.CharacterSystem
             groundedCollider.enabled = false;
             animator.speed = animatorSpeed;
         }
+
+        protected bool IsPlayingAttackAnimation()
+        {
+            return animator.GetCurrentAnimatorStateInfo(0).IsName("Attack");
+        }
+
 
     }
 }

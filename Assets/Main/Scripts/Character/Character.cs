@@ -8,8 +8,9 @@ namespace Gamaga.CharacterSystem
         [SerializeField] private CharacterStats stats = null;
         [SerializeField] private LayerMask groundLayerMask;
         [SerializeField] private bool airControll = false;
-        [SerializeField] private float hitTime = 1.0f;        
-        
+        [SerializeField] private float hitTime = 1.0f;
+        [SerializeField] private GameObject[] dealDamageArray = null;
+
 
         private bool isJumping = false;
         private bool isFacingRight = true;
@@ -17,20 +18,32 @@ namespace Gamaga.CharacterSystem
         private bool isRunning = true;
         private bool isHit = false;
         private bool isDead = false;
-                
+
         private float hitTimer = 0.0f;
         private int numberOfJumps = 0;
-        
+
+
+
         protected override void Awake()
         {
             base.Awake();
-            SetUpDamageable( stats );
+            SetUpDamageable(stats.HP);
+            SetUpDealDamageArray( stats.DMG );
         }
 
-        private void SetUpDamageable(CharacterStats stats)
+        private void SetUpDamageable(int hp)
         {
             DamageableManager damageable = gameObject.GetOrAddComponent<DamageableManager>();
-            damageable.SetHP(stats.HP);            
+            damageable.SetHP(hp);
+        }
+
+        private void SetUpDealDamageArray(int dmg)
+        {
+            for (int n = 0; n < dealDamageArray.Length; n++)
+            {
+                IDealDamage dealDamagePart = dealDamageArray[n].GetComponent<IDealDamage>();
+                dealDamagePart.SetDamage(dmg);
+            }
         }
 
         private void Update()
@@ -85,6 +98,15 @@ namespace Gamaga.CharacterSystem
             
         }
 
+        public void Attack()
+        {
+            if (!isGrounded || IsPlayingAttackAnimation())
+                return;
+
+            StopAndAddForce(Vector2.zero , ForceMode2D.Force);
+            animator.SetTrigger("Attack");
+        }
+
         private void StopAndAddForce(Vector2 force , ForceMode2D forceMode)
         {
             rb.velocity = Vector2.zero;
@@ -94,6 +116,9 @@ namespace Gamaga.CharacterSystem
 
         private bool CanMove()
         {
+            if (IsPlayingAttackAnimation())
+                return false;
+
             return !isDead && (isGrounded || airControll);
         }
 
@@ -142,8 +167,12 @@ namespace Gamaga.CharacterSystem
 
         private bool CanJump()
         {
+            if (IsPlayingAttackAnimation())
+                return false;
+
             return !isDead && ( (isGrounded || numberOfJumps + 1 < stats.MaxNumberOfJumps) && !isHit );
         }
+
 
         private void UpdateAnimator()
         {
@@ -183,7 +212,10 @@ namespace Gamaga.CharacterSystem
         public void Kill()
         {
             isDead = true;
-        }
+            Destroy(thisCollider);
+            StopAndAddForce(Vector2.zero , ForceMode2D.Force);
+            rb.isKinematic = true;
+        }        
 
     }
 

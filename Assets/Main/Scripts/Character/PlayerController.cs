@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using Gamaga.CharacterSystem;
 using Gamaga.InputSystem;
-using Gamaga.DamageSystem;
-using Gamaga.GameLogic;
+
 
 namespace Gamaga
 {
@@ -20,6 +19,9 @@ namespace Gamaga
             {
                 character.Jump();
             }
+
+            if (Input.GetKey(KeyCode.J))
+                character.Attack();
 
         }
 

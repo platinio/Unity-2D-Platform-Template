@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   hp: 20
-  dmg: 1
-  speed: 20
-  jumpForce: 1800
-  maxNumberOfJumps: 1
+  dmg: 200
+  speed: 4
+  jumpForce: 1500
+  maxNumberOfJumps: 2
