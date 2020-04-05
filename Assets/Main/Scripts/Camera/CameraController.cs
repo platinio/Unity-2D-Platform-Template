@@ -16,7 +16,7 @@ namespace Gamaga
         private int cameraFacingDirection = 1;
 
 
-        private void LateUpdate()
+        private void FixedUpdate()
         {
             MirrorUpdate();
             FollowTarget();            
@@ -41,9 +41,13 @@ namespace Gamaga
         }
 
         private bool ShouldMirrorCamera()
-        {           
+        {
+            int dir = GetTargetMovingDirection();
+            
+            if (dir == 0)
+                return false;
            
-           return GetTargetMovingDirection() != cameraFacingDirection;
+           return dir != cameraFacingDirection;
         }
 
         private void FollowTarget()
@@ -66,8 +70,12 @@ namespace Gamaga
         private int GetTargetMovingDirection()
         {
             Vector2 dir = new Vector2(target.transform.position.x, target.transform.position.y) - lastTargetPostion;
-            dir.Normalize();
+            Debug.Log(dir.x);
+            if (Mathf.Abs( dir.x ) < 0.000001f)
+                return 0;
 
+            dir.Normalize();
+            lastTargetPostion = target.transform.position;
             return (int)Mathf.Sign(dir.x);
         }
 
