@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 namespace Gamaga
@@ -7,62 +6,72 @@ namespace Gamaga
     public class Parallax : MonoBehaviour
     {
         [SerializeField] private float parallaxSpeed = 0.0f;
-       
-        
-        private float startPosition = 0.0f;
-        private Transform mainCamera = null;        
-        private float size = 0.0f;       
-        private float y;
-        private SpriteRenderer render = null;
-        [SerializeField] private GameObject left = null;
-        [SerializeField] private GameObject center = null;
-        [SerializeField] private GameObject right = null;
 
+        private float spriteSize = 0.0f;
+        private Vector2 startPosition = Vector2.zero;       
+        private Transform mainCamera = null;  
+        private SpriteRenderer render = null;
+        
         private void Awake()
+        {
+            Initialize();
+
+            
+            CreateSpriteAtPosition(transform.position + (Vector3.left * spriteSize));
+            CreateSpriteAtPosition(transform.position + (Vector3.right * spriteSize));
+        }
+
+        private void Initialize()
         {
             render = GetComponent<SpriteRenderer>();
             mainCamera = Camera.main.transform;
-            startPosition = transform.position.x;           
-            y = transform.position.y;
-            size = render.bounds.size.x;
-            center = gameObject;
-            
-            left = CreateParallax(transform.position + (Vector3.left * size));
-            right = CreateParallax(transform.position + (Vector3.right * size));
+            startPosition.x = transform.position.x;
+            startPosition.y = transform.position.y;
+            spriteSize = render.bounds.size.x;            
         }
+
 
         private void LateUpdate()
         {
-            float d = (mainCamera.position.x * parallaxSpeed);
-            transform.position = new Vector3( startPosition + d , y , transform.position.z );
-
-            d = Mathf.Abs(center.transform.position.x - mainCamera.position.x );
-           // Debug.Log( d + " " + size * 0.5f );
-            if (d > size * 0.4f)
-            {
-                float dir = Mathf.Sign( mainCamera.transform.position.x - center.transform.position.x );
-
-                startPosition += size * dir;
-
-
-            }
-
-
+            UpdateParallaxEffect();
+            CheckParallaxBounds();
         }
 
-        private GameObject CreateParallax(Vector3 position)
+        private void UpdateParallaxEffect()
+        {
+            float parallax = (mainCamera.position.x * parallaxSpeed);
+            transform.position = new Vector3(startPosition.x + parallax, startPosition.y, transform.position.z);            
+        }
+
+        private void CheckParallaxBounds()
+        {
+            float d = Mathf.Abs(transform.position.x - mainCamera.position.x);
+            if (d > spriteSize * 0.4f)
+            {
+                float dir = Mathf.Sign(mainCamera.transform.position.x - transform.position.x);
+                startPosition.y += spriteSize * dir;
+            }
+        }
+
+
+        private GameObject CreateSpriteAtPosition(Vector3 position)
         {
             GameObject go = new GameObject("Parallax" , typeof(SpriteRenderer) );
             go.transform.parent = transform;
             go.transform.position = position;
-            SpriteRenderer r = go.GetComponent<SpriteRenderer>();
-            r.sprite = render.sprite;
-            r.sortingLayerName = render.sortingLayerName;
-            r.sortingOrder = render.sortingOrder;
-
             go.transform.localScale = Vector3.one;
 
+            SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+            CopySpriteRenderSettings( render , sr );
+
             return go;
+        }
+
+        private void CopySpriteRenderSettings(SpriteRenderer from , SpriteRenderer to)
+        {            
+            to.sprite = from.sprite;
+            to.sortingLayerName = from.sortingLayerName;
+            to.sortingOrder = from.sortingOrder;
         }
 
 

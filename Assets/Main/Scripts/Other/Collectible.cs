@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using Gamaga.UI;
 
 namespace Gamaga
 {    
@@ -8,6 +9,7 @@ namespace Gamaga
         [SerializeField] private float verticalMovementAmount = 0.5f;
         [SerializeField] private float animTime = 1.0f;
         [SerializeField] private UnityEvent onCollect = null;
+        [SerializeField] private int score = 100;
 
         private SpriteRenderer render = null;
         private bool canCollect = true;
@@ -20,7 +22,6 @@ namespace Gamaga
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            Debug.Log(collider.name);
             if (!canCollect)
                 return;
             
@@ -28,6 +29,8 @@ namespace Gamaga
             render.FadeOut( animTime * 1.3f ).SetEase(Ease.EaseOutExpo).SetOnComplete( delegate { Destroy(gameObject); } );
             canCollect = false;
             onCollect.Invoke();
+            ScoreManager.instance.GiveScore(score);
+            ScoreManager.instance.ItemCollected();
         }
 
     }

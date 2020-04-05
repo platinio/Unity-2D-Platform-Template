@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Platinio.TweenEngine;
-using System.Text;
+using Platinio;
 
 namespace Gamaga.UI
 {    
-    public class ScoreManager : MonoBehaviour
+    public class ScoreManager : Singleton<ScoreManager>
     {
         [SerializeField] private Text scoreLabel = null;
         [SerializeField] private Text collectedItemAmountLabel = null;
