@@ -22,6 +22,7 @@ namespace Gamaga.CharacterSystem
         private float hitTimer = 0.0f;
         private int numberOfJumps = 0;
 
+        private Vector2 currentInput = Vector2.zero;
 
 
         protected override void Awake()
@@ -66,7 +67,8 @@ namespace Gamaga.CharacterSystem
         }
 
         public void HandleInput(Vector2 m)
-        {          
+        {
+            currentInput = m;
 
             if (isHit)
                 return;
@@ -119,7 +121,20 @@ namespace Gamaga.CharacterSystem
             if (IsPlayingAttackAnimation())
                 return false;
 
-            return !isDead && (isGrounded || airControll);
+
+            return !isDead && (isGrounded || CanDoAirControl()) ;
+        }
+
+        private bool CanDoAirControl()
+        {
+            if (!airControll)
+                return false;
+
+            Vector2 center = transform.position;
+            center += thisCollider.offset;
+
+            return !Physics2D.CapsuleCast(center, thisCollider.size, thisCollider.direction, transform.eulerAngles.z, currentInput.normalized, 0.1f, 1 << LayerMask.NameToLayer("Ground")) ;            
+
         }
 
         private void Move(Vector2 m)
@@ -204,6 +219,23 @@ namespace Gamaga.CharacterSystem
             return hitCollider != null;
         }
 
+        private bool IsTouchingSomething()
+        {
+            Vector2 center = transform.position;
+            center += thisCollider.offset;
+
+            Collider2D[] overlapColliderArray = Physics2D.OverlapCapsuleAll( center , thisCollider.size , thisCollider.direction , transform.eulerAngles.z );
+
+            for (int n = 0; n < overlapColliderArray.Length; n++)
+            {
+                if (overlapColliderArray[n] != thisCollider)
+                    return true;
+            }
+
+            return false;
+
+        }
+
         private Collider2D GroundColliderOverlap()
         {
             return Physics2D.OverlapBox(groundedCollider.transform.position, groundedCollider.size, groundedCollider.transform.eulerAngles.z, groundLayerMask.value);
@@ -212,9 +244,15 @@ namespace Gamaga.CharacterSystem
         public void Kill()
         {
             isDead = true;
-            Destroy(thisCollider);
-            StopAndAddForce(Vector2.zero , ForceMode2D.Force);
-            rb.isKinematic = true;
+
+            rb.velocity = Vector2.zero;
+
+            if (isGrounded)
+            {
+                rb.isKinematic = true;
+                Destroy(thisCollider);
+            }
+                
         }        
 
     }

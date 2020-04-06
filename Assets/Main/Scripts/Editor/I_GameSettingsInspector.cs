@@ -17,12 +17,17 @@ namespace Gamaga.EditorCode
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
+            EditorGUILayout.Space();
+
             EditorGUILayout.LabelField("Player Settings", EditorStyles.boldLabel);
             DrawCharacterStats(settings.PlayerStats, "Player");
+
+            EditorGUILayout.Space();
+
             EditorGUILayout.LabelField("Enemy Settings", EditorStyles.boldLabel);
             DrawCharacterStats(settings.EnemyStats , "Skeleton");
-
-            if (GUILayout.Button("Set DefaultValues"))
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Set Default Values"))
             {
                 settings.SetDefaultValues();
             }

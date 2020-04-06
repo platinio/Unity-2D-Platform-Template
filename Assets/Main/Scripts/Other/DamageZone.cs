@@ -5,16 +5,18 @@ namespace Gamaga
 {
     public class DamageZone : MonoBehaviour , IDealDamage
     {
-        
+        [SerializeField] private int damage = 1;
         [SerializeField] private float pushForce = 50.0f;
+        [SerializeField] private bool instantDead = false;
         [SerializeField] private ForceMode2D forceMode = ForceMode2D.Impulse;
+        
 
         private DamageInfo damageInfo;
-        private int damage = 1;
+        
 
         private void Start()
         {
-            damageInfo.dmg = damage;
+            damageInfo.dmg = instantDead ? int.MaxValue : damage;
             damageInfo.force = pushForce;
             damageInfo.forceMode = forceMode;
         }

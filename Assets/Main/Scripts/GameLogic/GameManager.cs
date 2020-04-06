@@ -27,6 +27,7 @@ namespace Gamaga.GameLogic
 
         public void GameOver()
         {
+
             gameOverSR.Fade(0.9f , 2.0f).SetEase(Ease.EaseOutExpo).SetEvent(delegate 
             {                
                 playerSR.sortingLayerName = GameOverLayerName;                

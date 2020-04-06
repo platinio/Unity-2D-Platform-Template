@@ -12,6 +12,7 @@ namespace Gamaga.DamageSystem
         [SerializeField] private float inmunityTime = 2.0f;
 
         private float inmunityTimer = 0.0f;
+        private bool isDead = false;
 
         public OnDamageEvent OnDamage { get { return onDamage; } }
         public UnityEvent OnDead { get { return onDead; } }
@@ -31,9 +32,10 @@ namespace Gamaga.DamageSystem
             inmunityTimer = inmunityTime;
             HP = Mathf.Max(HP - info.dmg , 0);
             onDamage.Invoke(info);
-
-            if (HP <= 0)
+            
+            if (HP <= 0 && !isDead)
             {
+                isDead = true;
                 onDead.Invoke();
             }
         }
