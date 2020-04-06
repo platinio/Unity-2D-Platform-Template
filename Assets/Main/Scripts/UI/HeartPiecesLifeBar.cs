@@ -12,7 +12,7 @@ namespace Gamaga.UI
         private Heart[] heartArray = null;
         private int heartIndex = 0;
 
-        private void Awake()
+        private void Start()
         {
             CreateHearts();
             damageableManager.OnDamage.AddListener(delegate (DamageInfo info){ DecreaseValue(info.dmg); });
@@ -41,6 +41,7 @@ namespace Gamaga.UI
         {
             Heart heart = Instantiate(heartPrefab);
             heart.transform.parent = heartContainer;
+            heart.transform.localScale = Vector3.one;
             heart.SetValue( Heart.MAX_PIECES );
 
             return heart;

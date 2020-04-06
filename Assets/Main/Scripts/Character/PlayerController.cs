@@ -20,9 +20,14 @@ namespace Gamaga
                 character.Jump();
             }
 
-            if (Input.GetKey(KeyCode.J))
+            if ( PlayerInput.Attack )
                 character.Attack();
 
+        }
+
+        private void OnDisable()
+        {
+            character.HandleInput(Vector2.zero);
         }
 
     }

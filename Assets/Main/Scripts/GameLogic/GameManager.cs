@@ -10,6 +10,7 @@ namespace Gamaga.GameLogic
         [SerializeField] private SpriteRenderer playerSR = null;
         [SerializeField] private SpriteRenderer gameOverSR = null;
         [SerializeField] private Popup gameOverPopup = null;
+        [SerializeField] private Popup levelCompletePopup = null;
         [SerializeField] private GameObject mobileInputCanvas = null;
 
         private const string GameOverLayerName = "GameOver";
@@ -39,6 +40,19 @@ namespace Gamaga.GameLogic
                 {
                     Time.timeScale = 0.0f;
                 } );
+            });
+        }
+
+        public void LevelComplete()
+        {
+            gameOverSR.Fade(0.9f, 2.0f).SetEase(Ease.EaseOutExpo).SetEvent(delegate
+            {
+                playerSR.sortingLayerName = GameOverLayerName;
+            }, 0.5f).SetDelay(0.25f).SetOnComplete(
+            delegate
+            {
+                levelCompletePopup.OnClick.AddListener(ReloadCurrentScene);
+                levelCompletePopup.Show();
             });
         }
 

@@ -31,6 +31,18 @@ namespace Gamaga.InputSystem
             }
         }
 
+        public static bool Attack
+        {
+            get 
+            {
+                #if UNITY_STANDALONE || UNITY_EDITOR
+                return Input.GetButtonDown("Attack");
+                #else
+                return InputManager.GetAxis("Attack") > 0.5f;
+                #endif
+            }
+        }
+
     }
 
 }

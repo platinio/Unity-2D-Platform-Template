@@ -1,18 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using Platinio.TweenEngine;
 
-public class FinalScoreLabel : MonoBehaviour
+
+namespace Gamaga.UI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class FinalScoreLabel : MonoBehaviour
     {
-        
+        [SerializeField] private Text label = null;
+        [SerializeField] private float animTime = 0.0f;
+        [SerializeField] private Ease ease = Ease.Linear;
+
+        public void Show()
+        {
+            PlatinioTween.instance.ValueTween( 0.0f , ScoreManager.instance.Score , animTime ).SetEase(ease).SetOnUpdateFloat(
+            delegate(float v) 
+            {
+                label.text = ((int)v).ToString();
+            });
+        }
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+

@@ -17,6 +17,8 @@ namespace Gamaga.UI
         private int targetScore = 0;
         private int collectedItems = 0;
 
+        public int Score { get { return targetScore; } }
+
         private void Awake()
         {
             UpdateCollectedItemsAmountLabel();
