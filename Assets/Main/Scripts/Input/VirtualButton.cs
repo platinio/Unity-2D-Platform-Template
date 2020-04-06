@@ -17,7 +17,7 @@ namespace Gamaga.InputSystem
         private bool isPressed = false;
         private bool pointerDownThisFrame = false;
         private Image image = null;
-
+       
         private void Awake()
         {
             image = GetComponent<Image>();
@@ -27,25 +27,23 @@ namespace Gamaga.InputSystem
         public void OnPointerDown(PointerEventData eventData)
         {
             isPressed = true;
-            pointerDownThisFrame = true;
+            pointerDownThisFrame = true;           
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             isPressed = false;
-            pointerDownThisFrame = false;
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            isPressed = false;
-            pointerDownThisFrame = false;
+            isPressed = false;           
         }
 
         private void Update()
         {
             image.color = isPressed ? pressedColor : normalColor;
-            InputManager.SetAxis(axisName , pointerDownThisFrame ? 1.0f : 0.0f);
+            InputManager.SetAxis(axisName, pointerDownThisFrame ? 1.0f : 0.0f);
             pointerDownThisFrame = false;
         }
 

@@ -24,6 +24,7 @@ namespace Gamaga.CharacterSystem
 
         private float hitTimer = 0.0f;
         private int numberOfJumps = 0;
+        private float ungroundedTimer = 0.0f;
 
         private Vector2 currentInput = Vector2.zero;
 
@@ -192,15 +193,17 @@ namespace Gamaga.CharacterSystem
                 return;
 
             numberOfJumps++;
+            //ensure that at leats for this frame we no are grounded so the jump counter dont get to zero inmediatly
+            ungroundedTimer = 0.01f;
             StopAndAddForce(stats.JumpForce * Vector2.up , ForceMode2D.Force);
         }
 
         private bool CanJump()
-        {
+        {            
             if (IsPlayingAttackAnimation())
                 return false;
-
-            return !isDead && ( (isGrounded || numberOfJumps + 1 < stats.MaxNumberOfJumps) && !isHit );
+           
+            return !isDead && ( (isGrounded || numberOfJumps < stats.MaxNumberOfJumps) && !isHit );
         }
 
 
@@ -230,6 +233,12 @@ namespace Gamaga.CharacterSystem
 
         private bool IsTouchingTheGround()
         {
+            if (ungroundedTimer > 0.0f)
+            {
+                ungroundedTimer -= Time.deltaTime;
+                return false;
+            }
+
             Collider2D hitCollider = GroundColliderOverlap();
             return hitCollider != null;
         }

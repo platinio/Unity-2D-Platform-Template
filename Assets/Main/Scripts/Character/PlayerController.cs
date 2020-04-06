@@ -16,7 +16,7 @@ namespace Gamaga
             character.HandleInput(m);
 
             if ( PlayerInput.Jump )
-            {
+            {                
                 character.Jump();
             }
 
