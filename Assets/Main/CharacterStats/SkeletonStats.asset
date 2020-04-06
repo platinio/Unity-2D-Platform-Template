@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SkeletonStats
   m_EditorClassIdentifier: 
   hp: 1
-  dmg: 99999
+  dmg: 1
   speed: 1
   jumpForce: 0
   maxNumberOfJumps: 0

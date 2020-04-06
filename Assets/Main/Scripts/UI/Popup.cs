@@ -18,6 +18,8 @@ namespace Gamaga.UI
         [SerializeField] private Ease enterEase = Ease.EaseInOutExpo;
         [SerializeField] private Ease exitEase = Ease.EaseInOutExpo;
         [SerializeField] private Button button = null;
+        [SerializeField] private UnityEvent onShow = null;
+        [SerializeField] private UnityEvent onHide = null;
 
         private bool isVisible = false;
         private bool isBusy = false;
@@ -38,7 +40,12 @@ namespace Gamaga.UI
             {
                 isBusy = false;
                 isVisible = true;
-            }).SetOnComplete(onComplete);
+            }).SetOnComplete(delegate 
+            {
+                onShow.Invoke();
+                if(onComplete != null)
+                    onComplete();
+            });
 
         }
 
@@ -48,7 +55,12 @@ namespace Gamaga.UI
             {
                 isBusy = false;
                 isVisible = false;
-            }).SetOnComplete( onComplete );
+            }).SetOnComplete( delegate 
+            {
+                onHide.Invoke();
+                if (onComplete != null)
+                    onComplete();
+            } );
         }
 
         public void Toggle(Action onComplete = null)

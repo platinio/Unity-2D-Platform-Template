@@ -16,4 +16,4 @@ MonoBehaviour:
   dmg: 200
   speed: 4
   jumpForce: 1500
-  maxNumberOfJumps: 2
+  maxNumberOfJumps: 50
