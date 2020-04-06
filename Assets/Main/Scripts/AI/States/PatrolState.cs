@@ -2,6 +2,9 @@
 
 namespace Gamaga.AI
 {
+    /// <summary>
+    /// Patrol State of the skeleton
+    /// </summary>
     public class PatrolState : AIState
     {
         [SerializeField] private Transform leftPatrolPoint = null;

@@ -2,6 +2,9 @@
 
 namespace Gamaga.AI
 {
+    /// <summary>
+    /// Idle State of the Skeleton
+    /// </summary>
     public class IdleState : AIState
     {
         [SerializeField] private float minIdleTime = 1.0f;
