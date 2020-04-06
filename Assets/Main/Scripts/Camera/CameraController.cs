@@ -21,12 +21,19 @@ namespace Gamaga
 
         private void Awake()
         {
+            InitializeCameraBounds();
+        }
+
+        private void InitializeCameraBounds()
+        {
             Vector2 cameraLimitCenter = cameraLimit.transform.position;
             cameraLimitCenter += cameraLimit.offset;
-            minCameraposition = new Vector2( cameraLimitCenter.x - ( cameraLimit.size.x / 2.0f ) , cameraLimitCenter.y - (cameraLimit.size.y / 2.0f));
+            minCameraposition = new Vector2(cameraLimitCenter.x - (cameraLimit.size.x / 2.0f), cameraLimitCenter.y - (cameraLimit.size.y / 2.0f));
             maxCameraPosition = new Vector2(cameraLimitCenter.x + (cameraLimit.size.x / 2.0f), cameraLimitCenter.y + (cameraLimit.size.y / 2.0f));
         }
 
+        //I know is strange to do this on FixedUpdate, but since the player is moving using forces
+        //the best thing to do will be follow him in the FixedUpdate instead of Update/LateUpdate so you can avoid jittering
         private void FixedUpdate()
         {
             MirrorUpdate();
@@ -34,6 +41,7 @@ namespace Gamaga
             ClampCameraPosition();
         }
 
+        //if the player is facing another direction for a certain amoint of time, them made the camera face that direction to
         private void MirrorUpdate()
         {
             if ( ShouldMirrorCamera() )
@@ -97,6 +105,8 @@ namespace Gamaga
             cameraFacingDirection *= -1;
         }
 
+        //clamp the camera to some margins, if the player falls them just follow him until some point,
+        //and side margin so the player nevers get outside the camera no matter how fast he is moving
         private void ClampCameraPosition()
         {
             Vector3 currentPosition = transform.position;

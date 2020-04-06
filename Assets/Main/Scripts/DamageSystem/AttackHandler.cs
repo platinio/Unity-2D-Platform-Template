@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gamaga.DamageSystem
 {
+    /// <summary>
+    /// This class just handle the enable or disable or an attack zone mostly for physical attacks
+    /// </summary>
     public class AttackHandler : MonoBehaviour
     {
         [SerializeField] private DamageZone damageZone = null;

@@ -18,6 +18,7 @@ namespace Gamaga.GameLogic
 
         protected override void Awake()
         {
+            //spawn virtual control for android devices
             #if UNITY_ANDROID && !UNITY_EDITOR
             Instantiate(mobileInputCanvas);
             #endif
@@ -28,7 +29,7 @@ namespace Gamaga.GameLogic
 
         public void GameOver()
         {
-
+            //here I am using my tween library you can read more about it here https://github.com/platinio/PlatinioTween
             gameOverSR.Fade(0.9f , 2.0f).SetEase(Ease.EaseOutExpo).SetEvent(delegate 
             {                
                 playerSR.sortingLayerName = GameOverLayerName;                
@@ -45,6 +46,7 @@ namespace Gamaga.GameLogic
 
         public void LevelComplete()
         {
+            //here I am using my tween library you can read more about it here https://github.com/platinio/PlatinioTween
             gameOverSR.Fade(0.9f, 2.0f).SetEase(Ease.EaseOutExpo).SetEvent(delegate
             {
                 playerSR.sortingLayerName = GameOverLayerName;

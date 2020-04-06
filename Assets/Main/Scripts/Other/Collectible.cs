@@ -24,7 +24,8 @@ namespace Gamaga
         {
             if (!canCollect)
                 return;
-            
+
+            //here I am using my tween library you can read more here https://github.com/platinio/PlatinioTween
             transform.Move( transform.position + ( Vector3.up * verticalMovementAmount ) , animTime );
             render.FadeOut( animTime * 1.3f ).SetEase(Ease.EaseOutExpo).SetOnComplete( delegate { Destroy(gameObject); } );
             canCollect = false;

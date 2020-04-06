@@ -2,6 +2,9 @@
 
 namespace Gamaga.CharacterSystem
 {
+    /// <summary>
+    /// Base class for all characters
+    /// </summary>
     public class Actor : MonoBehaviour
     {
         [SerializeField] protected BoxCollider2D groundedCollider = null;
@@ -12,6 +15,7 @@ namespace Gamaga.CharacterSystem
         protected Animator animator = null;
         protected CapsuleCollider2D thisCollider = null;
 
+        //animator hash
         protected int isFacingRightHash = Animator.StringToHash("isFacingRight");
         protected int isJumpingHash = Animator.StringToHash("isJumping");
         protected int isGroundedHash = Animator.StringToHash("isGrounded");

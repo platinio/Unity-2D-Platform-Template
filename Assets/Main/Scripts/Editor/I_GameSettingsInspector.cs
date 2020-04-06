@@ -36,6 +36,7 @@ namespace Gamaga.EditorCode
 
         private void DrawCharacterStats(CharacterStats stats , string name)
         {
+            //show an error if the stats reference is null
             if (stats == null)
             {
                 EditorGUILayout.HelpBox("You need to assign the "+ name + " ScritableObject", MessageType.Error);

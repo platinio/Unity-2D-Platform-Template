@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Gamaga.InputSystem
 {
+    /// <summary>
+    /// Class for reading all inputs
+    /// </summary>
     public static class PlayerInput 
     {
         public static Vector2 JoystickInput

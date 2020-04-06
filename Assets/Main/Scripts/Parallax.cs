@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Gamaga
 {
+ 
+    /// <summary>
+    /// Base class for the parallax effect
+    /// </summary>
     public class Parallax : MonoBehaviour
     {
         [SerializeField] private float parallaxSpeed = 0.0f;

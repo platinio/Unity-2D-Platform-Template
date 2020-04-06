@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using Gamaga.CharacterSystem;
-using Gamaga.DamageSystem;
-using Gamaga.GameLogic;
-
 
 
 namespace Gamaga.AI

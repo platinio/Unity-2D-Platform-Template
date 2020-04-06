@@ -4,6 +4,10 @@ using UnityEngine.EventSystems;
 
 namespace Gamaga.InputSystem 
 {
+    /// <summary>
+    /// This is just an middle man for passing the mobile UI input to the InputManager
+    /// so we can read the Input in a way similar to the built in InputManager
+    /// </summary>
     public class VirtualButton : MonoBehaviour , IPointerDownHandler , IPointerUpHandler , IPointerExitHandler
     {
         [SerializeField] private string axisName = null;

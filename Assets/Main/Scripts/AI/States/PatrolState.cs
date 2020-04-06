@@ -25,8 +25,19 @@ namespace Gamaga.AI
         }
 
         public override int OnUpdate()
-        {           
-            Vector2 dir = (nextPatrolPoint.position - transform.position).normalized;
+        {
+            MoveToPatrolPoint();
+
+            if (IsCloseEnoughToPatrolPoint())
+                return (int)AIStateType.Idle;
+
+            return (int)AIStateType.Patrol;
+
+        }
+
+        private void MoveToPatrolPoint()
+        {
+            Vector2 dir = CalculateDirection();
 
             if (dir.x > 0)
             {
@@ -36,16 +47,23 @@ namespace Gamaga.AI
             {
                 AI.MoveLeft();
             }
+        }
 
-            float distanceToPatrolPoint = Mathf.Abs( transform.position.x - nextPatrolPoint.position.x ); //Vector2.Distance(transform.position, nextPatrolPoint.position);
+        private Vector2 CalculateDirection()
+        {
+            return (nextPatrolPoint.position - transform.position).normalized; ;
+        }
+
+        private bool IsCloseEnoughToPatrolPoint()
+        {
+            float distanceToPatrolPoint = Mathf.Abs(transform.position.x - nextPatrolPoint.position.x);
 
             if (distanceToPatrolPoint < minDistanceToPatrolPoint)
             {
-                return (int)AIStateType.Idle;
+                return true;
             }
 
-            return (int)AIStateType.Patrol;
-
+            return false;
         }
 
         private Transform GetNextPatrolPoint()

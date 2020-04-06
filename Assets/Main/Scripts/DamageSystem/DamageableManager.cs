@@ -4,6 +4,9 @@ using Gamaga.Events;
 
 namespace Gamaga.DamageSystem
 {
+    /// <summary>
+    /// This class describe any object that can get damage and react to that
+    /// </summary>
     public class DamageableManager : MonoBehaviour, IDamageable
     {
         

@@ -3,6 +3,9 @@ using Gamaga.DamageSystem;
 
 namespace Gamaga.CharacterSystem
 {
+    /// <summary>
+    /// Class for a character that can move and jump, the character is drive using forces
+    /// </summary>
     public class Character : Actor
     {
         [SerializeField] private CharacterStats stats = null;
@@ -11,7 +14,7 @@ namespace Gamaga.CharacterSystem
         [SerializeField] private float hitTime = 1.0f;
         [SerializeField] private GameObject[] dealDamageArray = null;
 
-
+        //character state bools
         private bool isJumping = false;
         private bool isFacingRight = true;
         private bool isGrounded = false;
@@ -28,7 +31,11 @@ namespace Gamaga.CharacterSystem
         protected override void Awake()
         {
             base.Awake();
+
+            //setup damageable for handling damages to this character
             SetUpDamageable(stats.HP);
+
+            //setup my deal damage parts
             SetUpDealDamageArray( stats.DMG );
         }
 
@@ -105,7 +112,7 @@ namespace Gamaga.CharacterSystem
             if (!isGrounded || IsPlayingAttackAnimation())
                 return;
 
-            StopAndAddForce(Vector2.zero , ForceMode2D.Force);
+            rb.velocity = Vector2.zero;           
             animator.SetTrigger("Attack");
         }
 
@@ -130,10 +137,18 @@ namespace Gamaga.CharacterSystem
             if (!airControll)
                 return false;
 
+            //because the player is drive using tb.velocity directly, the player can get stuck while jumping pushing throung a platform or wall
+            //and just get stuck there until he stop moving in the air, in order to avoid this we need to check if the player is trying to push
+            //in the air to a wall or platform, and we do it just making a capsule cast using the player collider just a little far away if he 
+            //is touching someting them we stop the air control
+
             Vector2 center = transform.position;
             center += thisCollider.offset;
 
-            return !Physics2D.CapsuleCast(center, thisCollider.size, thisCollider.direction, transform.eulerAngles.z, currentInput.normalized, 0.1f, 1 << LayerMask.NameToLayer("Ground")) ;            
+            float angle = transform.eulerAngles.z;
+            int layer = 1 << LayerMask.NameToLayer("Ground");
+
+            return !Physics2D.CapsuleCast(center, thisCollider.size, thisCollider.direction, angle, currentInput.normalized, 0.1f, layer ) ;            
 
         }
 
@@ -217,23 +232,6 @@ namespace Gamaga.CharacterSystem
         {
             Collider2D hitCollider = GroundColliderOverlap();
             return hitCollider != null;
-        }
-
-        private bool IsTouchingSomething()
-        {
-            Vector2 center = transform.position;
-            center += thisCollider.offset;
-
-            Collider2D[] overlapColliderArray = Physics2D.OverlapCapsuleAll( center , thisCollider.size , thisCollider.direction , transform.eulerAngles.z );
-
-            for (int n = 0; n < overlapColliderArray.Length; n++)
-            {
-                if (overlapColliderArray[n] != thisCollider)
-                    return true;
-            }
-
-            return false;
-
         }
 
         private Collider2D GroundColliderOverlap()
